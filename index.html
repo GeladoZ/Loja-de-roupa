@@ -3,43 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de roupa | Checkout Pro</title>
+    <title>Loja de Roupa | Minimalist Collection</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
     <div class="logo">LOJA DE ROUPA</div>
-    <div class="cart-icon" onclick="toggleCarrinho()">
-        🛒 <span id="cart-count">0</span> itens
-    </div>
+    <nav>
+        <span>Coleção 2026</span>
+    </nav>
 </header>
 
-<main class="container" id="vitrine">
-    </main>
+<div class="layout">
+    <main class="vitrine" id="produtos-grid">
+        </main>
 
-<div id="sidebar-cart" class="sidebar">
-    <div class="cart-header">
-        <h2>Seu Carrinho</h2>
-        <button class="close-btn" onclick="toggleCarrinho()">×</button>
-    </div>
-    <div id="cart-items"></div>
-    <div class="cart-footer">
-        <p>Total: <strong>R$ <span id="total-price">0,00</span></strong></p>
-        <button class="btn-checkout" onclick="abrirCheckout()">FINALIZAR COMPRA</button>
-    </div>
+    <aside class="sidebar-carrinho">
+        <h3>Seu Carrinho</h3>
+        <div id="itens-carrinho">
+            <p class="empty-msg">O carrinho está vazio.</p>
+        </div>
+        <div class="footer-carrinho">
+            <div class="total">
+                <span>Total</span>
+                <span id="valor-total">R$ 0,00</span>
+            </div>
+            <button class="btn-finalizar" onclick="abrirCheckout()">FINALIZAR COMPRA</button>
+            <button class="btn-zap" onclick="finalizarZap()">COMPRAR VIA WHATSAPP</button>
+        </div>
+    </aside>
 </div>
 
-<div id="payment-modal" class="modal">
+<div id="modal-pagamento" class="modal">
     <div class="modal-content">
-        <h3>Finalizar Pedido</h3>
-        <p>Escolha como deseja pagar:</p>
-        
-        <div class="payment-options">
-            <button class="btn-pay pix" onclick="finalizar('Pix')">Pagar com PIX / Cartão</button>
-            <button class="btn-pay zap" onclick="finalizar('WhatsApp')">Fechar via WhatsApp</button>
-        </div>
-        <button class="btn-cancel" onclick="fecharCheckout()">Cancelar</button>
+        <h2>Pagamento Seguro</h2>
+        <p>Escolha a forma de pagamento:</p>
+        <button onclick="alert('Redirecionando para o PIX...')">PIX (5% OFF)</button>
+        <button onclick="alert('Abrindo Checkout Cartão...')">Cartão de Crédito</button>
+        <button class="btn-close" onclick="fecharCheckout()">Voltar</button>
     </div>
 </div>
 
