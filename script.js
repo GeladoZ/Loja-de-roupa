@@ -1,54 +1,55 @@
+
 const produtos = [
-    { id: 1, nome: "Camiseta Minimalista", preco: 89.90, img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" },
-    { id: 2, nome: "Jaqueta Bomber", preco: 249.90, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400" },
-    { id: 3, nome: "Calça Jeans Slim", preco: 159.90, img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400" },
-    { id: 4, nome: "Moletom Oversized", preco: 199.00, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" },
-    { id: 5, nome: "Tênis Urban", preco: 299.90, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" },
-    { id: 6, nome: "Boné Street", preco: 59.90, img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400" }
+    { id: 1, nome: "Camiseta Minimalista Branca", preco: 89.90, img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500" },
+    { id: 2, nome: "Jaqueta Bomber Navy", preco: 249.90, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" },
+    { id: 3, nome: "Calça Jeans Slim Fit", preco: 159.90, img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500" },
+    { id: 4, nome: "Moletom Oversized Gray", preco: 199.00, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500" },
+    { id: 5, nome: "Tênis Urban Sport", preco: 299.90, img: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500" },
+    { id: 6, nome: "Boné Street Black", preco: 59.90, img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500" }
 ];
 
 let carrinho = [];
 
-// Carrega os produtos na tela
-const vitrine = document.getElementById('vitrine');
-produtos.forEach(p => {
-    vitrine.innerHTML += `
+function renderizarProdutos() {
+    const grid = document.getElementById('produtos-grid');
+    grid.innerHTML = produtos.map(p => `
         <div class="card">
             <img src="${p.img}" alt="${p.nome}">
             <div class="card-info">
                 <h3>${p.nome}</h3>
-                <p class="price">R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
-                <button class="btn-add" onclick="adicionar(${p.id})">ADICIONAR</button>
+                <span class="price">R$ ${p.preco.toFixed(2).replace('.', ',')}</span>
+                <button class="btn-add" onclick="adicionar(${p.id})">ADICIONAR AO CARRINHO</button>
             </div>
         </div>
-    `;
-});
+    `).join('');
+}
 
 function adicionar(id) {
-    const produto = produtos.find(p => p.id === id);
-    carrinho.push(produto);
+    const p = produtos.find(item => item.id === id);
+    carrinho.push(p);
     atualizarCarrinho();
 }
 
 function atualizarCarrinho() {
-    const lista = document.getElementById('cart-items');
-    const totalDisplay = document.getElementById('total-price');
-    document.getElementById('cart-count').innerText = carrinho.length;
+    const container = document.getElementById('itens-carrinho');
+    const totalDisplay = document.getElementById('valor-total');
     
-    lista.innerHTML = "";
-    let total = 0;
+    if (carrinho.length === 0) {
+        container.innerHTML = '<p class="empty-msg">O carrinho está vazio.</p>';
+        totalDisplay.innerText = "R$ 0,00";
+        return;
+    }
 
-    carrinho.forEach((item, index) => {
-        total += item.preco;
-        lista.innerHTML += `
-            <div class="item-carrinho">
-                <span>${item.nome}</span>
-                <strong>R$ ${item.preco.toFixed(2)}</strong>
-                <button onclick="remover(${index})">x</button>
-            </div>
-        `;
-    });
-    totalDisplay.innerText = total.toFixed(2).replace('.', ',');
+    container.innerHTML = carrinho.map((item, index) => `
+        <div class="item-row">
+            <span>${item.nome}</span>
+            <strong>R$ ${item.preco.toFixed(2)}</strong>
+            <button style="border:none; background:none; cursor:pointer;" onclick="remover(${index})">✕</button>
+        </div>
+    `).join('');
+
+    const total = carrinho.reduce((acc, item) => acc + item.preco, 0);
+    totalDisplay.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
 }
 
 function remover(index) {
@@ -56,29 +57,14 @@ function remover(index) {
     atualizarCarrinho();
 }
 
-function toggleCarrinho() {
-    document.getElementById('sidebar-cart').classList.toggle('active');
+// Funções de Checkout
+function abrirCheckout() { document.getElementById('modal-pagamento').style.display = 'block'; }
+function fecharCheckout() { document.getElementById('modal-pagamento').style.display = 'none'; }
+
+function finalizarZap() {
+    const total = carrinho.reduce((acc, item) => acc + item.preco, 0);
+    const msg = `Olá! Quero finalizar meu pedido:\n${carrinho.map(i => `- ${i.nome}`).join('\n')}\n\nTotal: R$ ${total.toFixed(2)}`;
+    window.open(`https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`);
 }
 
-function abrirCheckout() {
-    if(carrinho.length === 0) return alert("Carrinho vazio!");
-    document.getElementById('payment-modal').style.display = 'flex';
-}
-
-function fecharCheckout() {
-    document.getElementById('payment-modal').style.display = 'none';
-}
-
-function finalizar(metodo) {
-    const total = document.getElementById('total-price').innerText;
-    if (metodo === 'WhatsApp') {
-        let msg = `Pedido Loja de Roupa:\n` + carrinho.map(i => `- ${i.nome}`).join('\n') + `\nTotal: R$ ${total}`;
-        window.open(`https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`);
-    } else {
-        alert(`Processando pagamento via ${metodo} no valor de R$ ${total}... (Simulação de Checkout Direto)`);
-        carrinho = [];
-        atualizarCarrinho();
-        fecharCheckout();
-        alert("Compra realizada com sucesso direto na loja!");
-    }
-}
+renderizarProdutos();
