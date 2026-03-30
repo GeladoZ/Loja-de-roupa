@@ -27,7 +27,7 @@ function addToCart(id) {
     const p = produtos.find(item => item.id === id);
     carrinho.push(p);
     updateUI();
-    if(!document.getElementById('cart-sidebar').classList.contains('open')) toggleCart();
+    document.getElementById('cart-sidebar').classList.add('open');
 }
 
 function updateUI() {
@@ -45,7 +45,7 @@ function updateUI() {
         <div class="cart-item">
             <span>${item.nome}</span>
             <strong>R$ ${item.preco.toFixed(2)}</strong>
-            <button onclick="removeItem(${index})" style="background:none; border:none; cursor:pointer;">✕</button>
+            <button onclick="removeItem(${index})" style="border:none; cursor:pointer;">✕</button>
         </div>
     `).join('');
 
@@ -65,12 +65,8 @@ function toggleCart() {
 function checkoutZap() {
     if(carrinho.length === 0) return alert("Adicione itens primeiro!");
     const total = carrinho.reduce((sum, item) => sum + item.preco, 0);
-    const texto = `Pedido Loja de Roupa:\n${carrinho.map(i => `- ${i.nome}`).join('\n')}\nTotal: R$ ${total.toFixed(2)}`;
+    const texto = `Olá! Quero comprar:\n${carrinho.map(i => `- ${i.nome}`).join('\n')}\n\nTotal: R$ ${total.toFixed(2)}`;
     window.open(`https://wa.me/5511999999999?text=${encodeURIComponent(texto)}`);
 }
 
 init();
-
-
-
-
