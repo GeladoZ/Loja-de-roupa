@@ -12,14 +12,13 @@
 <header class="navbar">
     <div class="logo">LOJA DE ROUPA</div>
     <div class="cart-trigger" onclick="toggleCart()">
-        <span class="cart-label">Carrinho</span>
+        <span>Carrinho</span>
         <span id="cart-count" class="badge">0</span>
     </div>
 </header>
 
 <div class="main-layout">
-    <section class="products-grid" id="grid-produtos">
-        </section>
+    <section class="products-grid" id="grid-produtos"></section>
 
     <aside id="cart-sidebar" class="cart-sidebar">
         <div class="cart-header">
@@ -33,11 +32,11 @@
 
         <div class="cart-footer">
             <div class="total-row">
-                <span>Total Estimado</span>
+                <span>Total</span>
                 <span id="total-value">R$ 0,00</span>
             </div>
             <button class="btn-checkout" onclick="checkoutZap()">FINALIZAR NO WHATSAPP</button>
-            <button class="btn-pix" onclick="alert('Sistema de PIX em manutenção. Use o WhatsApp!')">PAGAR COM PIX</button>
+            <button class="btn-pix" onclick="alert('Opção de PIX disponível no checkout do WhatsApp!')">PAGAR COM PIX</button>
         </div>
     </aside>
 </div>
@@ -45,8 +44,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
