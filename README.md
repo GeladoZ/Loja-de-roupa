@@ -13,3 +13,6 @@ Funcionalidades
 - [x] Carrinho lateral interativo (Sidebar).
 - [x] Checkout direto via API do WhatsApp.
 - [x] Design totalmente responsivo (Desktop e Mobile).
+
+Acesse a loja aqui
+(https://geladoz.github.io/Loja-de-roupa/)
