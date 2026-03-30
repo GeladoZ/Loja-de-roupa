@@ -3,57 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de roupa | Checkout</title>
+    <title>Loja de roupa | Checkout Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-    <h1>LOJA DE ROUPA</h1>
+    <div class="logo">LOJA DE ROUPA</div>
     <div class="cart-icon" onclick="toggleCarrinho()">
-        🛒 Carrinho (<span id="cart-count">0</span>)
+        🛒 <span id="cart-count">0</span> itens
     </div>
 </header>
 
+<main class="container" id="vitrine">
+    </main>
+
 <div id="sidebar-cart" class="sidebar">
-    <button class="close-btn" onclick="toggleCarrinho()">X</button>
-    <h2>Seu Carrinho</h2>
-    <div id="cart-items">
-        </div>
-    <div class="cart-total">
-        <strong>Total: R$ <span id="total-price">0,00</span></strong>
+    <div class="cart-header">
+        <h2>Seu Carrinho</h2>
+        <button class="close-btn" onclick="toggleCarrinho()">×</button>
     </div>
-    <button class="btn-finish" onclick="finalizarPedido()">Finalizar no WhatsApp</button>
+    <div id="cart-items"></div>
+    <div class="cart-footer">
+        <p>Total: <strong>R$ <span id="total-price">0,00</span></strong></p>
+        <button class="btn-checkout" onclick="abrirCheckout()">FINALIZAR COMPRA</button>
+    </div>
 </div>
 
-<main class="container">
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" alt="Camiseta">
-        <div class="card-info">
-            <h3>Camiseta Minimalista</h3>
-            <p class="price">R$ 89,90</p>
-            <button class="btn-add" onclick="adicionar(1, 'Camiseta', 89.90)">ADICIONAR AO CARRINHO</button>
+<div id="payment-modal" class="modal">
+    <div class="modal-content">
+        <h3>Finalizar Pedido</h3>
+        <p>Escolha como deseja pagar:</p>
+        
+        <div class="payment-options">
+            <button class="btn-pay pix" onclick="finalizar('Pix')">Pagar com PIX / Cartão</button>
+            <button class="btn-pay zap" onclick="finalizar('WhatsApp')">Fechar via WhatsApp</button>
         </div>
+        <button class="btn-cancel" onclick="fecharCheckout()">Cancelar</button>
     </div>
-
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400" alt="Jaqueta">
-        <div class="card-info">
-            <h3>Jaqueta Bomber</h3>
-            <p class="price">R$ 249,90</p>
-            <button class="btn-add" onclick="adicionar(2, 'Jaqueta Bomber', 249.90)">ADICIONAR AO CARRINHO</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=400" alt="Calça">
-        <div class="card-info">
-            <h3>Calça Jeans Slim</h3>
-            <p class="price">R$ 159,90</p>
-            <button class="btn-add" onclick="adicionar(3, 'Calça Jeans', 159.90)">ADICIONAR AO CARRINHO</button>
-        </div>
-    </div>
-</main>
+</div>
 
 <script src="script.js"></script>
 </body>
